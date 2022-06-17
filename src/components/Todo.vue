@@ -3,7 +3,12 @@
     <header class="todo-header"><div>todos</div></header>
     <section class="todoapp">
       <div class="todo-input">
-        <input class="toggle-all" type="checkbox" v-model="toggleAll" />
+        <input
+          class="toggle-all"
+          type="checkbox"
+          v-model="toggleAll"
+          v-show="todos.length"
+        />
         <input
           class="new-todo"
           autofocus
@@ -38,7 +43,8 @@
       </section>
       <footer class="footer" v-show="todos.length">
         <span class="todo-count">
-          <strong>{{ remaining }}</strong> item left
+          <strong>{{ remaining }}</strong>
+          {{ pluralize('item', remaining) }} left
         </span>
         <ul class="filters">
           <li>
@@ -101,22 +107,19 @@ export default {
   name: 'Todo',
   data() {
     return {
-      todos: [
-        {
-          id: 1,
-          title: 'Create a todo app',
-          completed: false,
-        },
-        {
-          id: 2,
-          title: 'Re-learn vue',
-          completed: false,
-        },
-      ],
+      todos: window?.todoStorage?.fetch(),
       newTodo: '',
       editedTodo: null,
       visibility: 'all',
     };
+  },
+  watch: {
+    todos: {
+      deep: true,
+      handler: function (newVal) {
+        window?.todoStorage?.save(newVal);
+      },
+    },
   },
   computed: {
     filteredTodos() {
@@ -140,6 +143,9 @@ export default {
     },
   },
   methods: {
+    pluralize(word, count) {
+      return word + (count > 1 ? 's' : '');
+    },
     setVisibility(visibility) {
       this.visibility = visibility;
     },
@@ -210,22 +216,25 @@ export default {
 }
 
 .todo-input {
-  display: flex;
+  position: relative;
 }
 
 .todo-input .toggle-all {
   width: 40px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
   margin: auto 0;
 }
 
 .new-todo {
-  flex: 1;
-  padding: 12px 0;
+  padding: 12px 12px 12px 40px;
   box-sizing: border-box;
   font-size: 24px;
   border: none;
   outline: none;
   font-style: italic;
+  width: 100%;
 }
 
 .new-todo::placeholder {
@@ -324,6 +333,7 @@ export default {
   border-top: 1px solid #e6e6e6;
   text-align: center;
   height: 20px;
+  color: #bfbfbf;
 }
 
 .todo-count {
@@ -338,6 +348,7 @@ export default {
   border: 0;
   background: none;
   position: relative;
+  color: #bfbfbf;
 }
 
 .clear-completed:hover {
