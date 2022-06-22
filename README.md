@@ -1,4 +1,8 @@
-# todo
+# todo-vue
+
+### Live demo:
+https://rian-sanjaya.github.io/todo-vue/
+### &nbsp;
 
 ## Project setup
 ```
