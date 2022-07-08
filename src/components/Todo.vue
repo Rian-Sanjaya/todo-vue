@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="todo-header"><div>todosss</div></header>
+    <header class="todo-header"><div>todos</div></header>
     <section class="todoapp">
       <div class="todo-input">
         <input
@@ -220,10 +220,11 @@ export default {
 }
 
 .todo-input .toggle-all {
-  width: 40px;
+  width: 20px;
   position: absolute;
   top: 0;
   bottom: 0;
+  left: 8px;
   margin: auto 0;
 }
 
@@ -267,9 +268,9 @@ export default {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: 8px;
   margin: auto 0;
-  width: 40px;
+  width: 20px;
 }
 
 .todo-list li .view label {
