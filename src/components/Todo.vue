@@ -9,10 +9,19 @@
           v-model="toggleAll"
           v-show="todos.length"
         />
+        <!-- <input
+          class="new-todo"
+          autofocus
+          autocomplete="off"
+          placeholder="What needs to be done?"
+          v-model="newTodo"
+          @keypress="checkTodo($event)"
+          @keyup.enter="addTodo"
+        /> -->
         <input
           class="new-todo"
           autofocus
-          autocomplet="off"
+          autocomplete="off"
           placeholder="What needs to be done?"
           v-model="newTodo"
           @keyup.enter="addTodo"
@@ -148,6 +157,12 @@ export default {
     },
     setVisibility(visibility) {
       this.visibility = visibility;
+    },
+    checkTodo(e) {
+      // only allow alphanumeric and space character
+      let char = String.fromCharCode(e.keyCode); // Get the character
+      if (/^[a-zA-Z0-9 ]*$/.test(char)) return true; // Match with regex
+      else e.preventDefault(); // If not match, don't add to input text
     },
     addTodo() {
       const value = this.newTodo && this.newTodo.trim();
